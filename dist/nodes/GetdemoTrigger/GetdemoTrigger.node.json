@@ -1,0 +1,19 @@
+{
+    "node": "n8n-nodes-getdemo",
+    "nodeVersion": "1.0",
+    "codexVersion": "1.0",
+    "categories": ["Marketing", "Sales"],
+    "resources": {
+        "credentialDocumentation": [
+            {
+                "url": "https://app.getdemo.com.br/docs"
+            }
+        ],
+        "primaryDocumentation": [
+            {
+                "url": "https://app.getdemo.com.br/docs"
+            }
+        ]
+    },
+    "alias": ["Getdemo Trigger", "Getdemo Webhook", "View Finished"]
+}
