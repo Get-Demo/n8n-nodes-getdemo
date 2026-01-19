@@ -61,41 +61,6 @@ class Getdemo {
                 },
             ],
         };
-        this.methods = {
-            credentialTest: {
-                async testGetdemoApiCredential(credential) {
-                    var _a;
-                    const baseUrl = 'https://get-demo-backend-prod.getdemo.com.br/api/external/v1';
-                    if (!((_a = credential.data) === null || _a === void 0 ? void 0 : _a.apiKey)) {
-                        return {
-                            status: 'Error',
-                            message: 'API Key is missing',
-                        };
-                    }
-                    const options = {
-                        method: 'GET',
-                        url: `${baseUrl}/recording`,
-                        headers: {
-                            'x-api-key': credential.data.apiKey,
-                            Accept: 'application/json',
-                        },
-                    };
-                    try {
-                        await this.helpers.request(options);
-                        return {
-                            status: 'OK',
-                            message: 'Connection successful!',
-                        };
-                    }
-                    catch (error) {
-                        return {
-                            status: 'Error',
-                            message: `Connection failed: ${error.message}`,
-                        };
-                    }
-                },
-            },
-        };
     }
     async execute() {
         const items = this.getInputData();

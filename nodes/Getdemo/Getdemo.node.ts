@@ -1,13 +1,9 @@
 import type {
 	IExecuteFunctions,
+	IHttpRequestOptions,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
-	IHttpRequestOptions,
-	ICredentialTestFunctions,
-	INodeCredentialTestResult,
-	ICredentialsDecrypted,
-	ICredentialDataDecryptedObject,
 } from 'n8n-workflow';
 import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 
@@ -125,45 +121,4 @@ export class Getdemo implements INodeType {
 
 		return [returnData];
 	}
-
-	methods = {
-		credentialTest: {
-			async testGetdemoApiCredential(
-				this: ICredentialTestFunctions,
-				credential: ICredentialsDecrypted<ICredentialDataDecryptedObject>,
-			): Promise<INodeCredentialTestResult> {
-				const baseUrl = 'https://get-demo-backend-prod.getdemo.com.br/api/external/v1';
-				
-				if (!credential.data?.apiKey) {
-					return {
-						status: 'Error',
-						message: 'API Key is missing',
-					};
-				}
-
-				const options: IHttpRequestOptions = {
-					method: 'GET',
-					url: `${baseUrl}/recording`,
-					headers: {
-						'x-api-key': credential.data.apiKey as string,
-						Accept: 'application/json',
-					},
-				};
-
-				try {
-					// eslint-disable-next-line @n8n/community-nodes/no-deprecated-workflow-functions
-					await this.helpers.request(options);
-					return {
-						status: 'OK',
-						message: 'Connection successful!',
-					};
-				} catch (error) {
-					return {
-						status: 'Error',
-						message: `Connection failed: ${error.message}`,
-					};
-				}
-			},
-		},
-	};
 }
