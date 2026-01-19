@@ -1,4 +1,9 @@
-import type { ICredentialType, INodeProperties } from 'n8n-workflow';
+import type {
+	IAuthenticateGeneric,
+	ICredentialTestRequest,
+	ICredentialType,
+	INodeProperties,
+} from 'n8n-workflow';
 
 export class GetdemoApi implements ICredentialType {
 	name = 'getdemoApi';
@@ -23,12 +28,20 @@ export class GetdemoApi implements ICredentialType {
 		},
 	];
 
-	authenticate = {
-		type: 'generic' as const,
+	authenticate: IAuthenticateGeneric = {
+		type: 'generic',
 		properties: {
 			headers: {
 				'x-api-key': '={{$credentials.apiKey}}',
 			},
+		},
+	};
+
+	test: ICredentialTestRequest = {
+		request: {
+			baseURL: 'https://get-demo-backend-prod.getdemo.com.br/api/external/v1',
+			url: '/recording',
+			method: 'GET',
 		},
 	};
 }

@@ -28,6 +28,13 @@ class GetdemoApi {
                 },
             },
         };
+        this.test = {
+            request: {
+                baseURL: 'https://get-demo-backend-prod.getdemo.com.br/api/external/v1',
+                url: '/recording',
+                method: 'GET',
+            },
+        };
     }
 }
 exports.GetdemoApi = GetdemoApi;
