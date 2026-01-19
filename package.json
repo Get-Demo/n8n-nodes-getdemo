@@ -1,6 +1,6 @@
 {
     "name": "n8n-nodes-getdemo",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "n8n community node for Getdemo - List recordings and receive view events",
     "license": "MIT",
     "homepage": "https://github.com/Get-Demo/n8n-nodes-getdemo",
@@ -30,9 +30,9 @@
     "n8n": {
         "n8nNodesApiVersion": 1,
         "strict": true,
-		"credentials": [
-			"dist/credentials/GetdemoApi.credentials.js"
-		],
+        "credentials": [
+            "dist/credentials/GetdemoApi.credentials.js"
+        ],
         "nodes": [
             "dist/nodes/Getdemo/Getdemo.node.js",
             "dist/nodes/GetdemoTrigger/GetdemoTrigger.node.js"
