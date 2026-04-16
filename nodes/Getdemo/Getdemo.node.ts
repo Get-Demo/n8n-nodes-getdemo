@@ -5,7 +5,7 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
+import { NodeConnectionTypes, NodeApiError } from 'n8n-workflow';
 
 export class Getdemo implements INodeType {
 	description: INodeTypeDescription = {
@@ -26,7 +26,6 @@ export class Getdemo implements INodeType {
 			{
 				name: 'getdemoApi',
 				required: true,
-				testedBy: 'testGetdemoApiCredential',
 			},
 		],
 		properties: [
@@ -113,7 +112,7 @@ export class Getdemo implements INodeType {
 					});
 					continue;
 				}
-				throw new NodeOperationError(this.getNode(), error, {
+				throw new NodeApiError(this.getNode(), error, {
 					itemIndex: i,
 				});
 			}

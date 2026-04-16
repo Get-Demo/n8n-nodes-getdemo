@@ -21,7 +21,6 @@ export class GetdemoTrigger implements INodeType {
 		},
 		inputs: [],
 		outputs: [NodeConnectionTypes.Main],
-		usableAsTool: true,
 		webhooks: [
 			{
 				name: 'default',
