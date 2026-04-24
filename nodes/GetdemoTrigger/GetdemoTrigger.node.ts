@@ -8,6 +8,8 @@ import type {
 } from 'n8n-workflow';
 import { NodeConnectionTypes } from 'n8n-workflow';
 
+// Trigger nodes are not usable as AI agent tools; n8n community verification requires omitting usableAsTool.
+// eslint-disable-next-line @n8n/community-nodes/node-usable-as-tool
 export class GetdemoTrigger implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Getdemo Trigger',
@@ -21,7 +23,6 @@ export class GetdemoTrigger implements INodeType {
 		},
 		inputs: [],
 		outputs: [NodeConnectionTypes.Main],
-		usableAsTool: true,
 		webhooks: [
 			{
 				name: 'default',
