@@ -27,8 +27,8 @@
 #        Repository name: n8n-nodes-getdemo
 #        Workflow name: publish.yml
 #        Environment: (leave blank unless you use GitHub Environments)
-#   4. Leave the NPM_TOKEN secret unset in this repository. GitHub's OIDC
-#      token is used instead — no secret ever touches your repo settings.
+#   4. In GitHub: remove repository secret NPM_TOKEN if it exists (empty/wrong
+#      token forces classic auth and breaks OIDC with a misleading E404).
 #
 # Option B — npm Automation Token (fallback):
 #   1. On npmjs.com: Access Tokens → Generate New Token → Granular Access Token.
@@ -90,11 +90,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Token auth takes precedence over OIDC. Remove NPM_TOKEN secret if you rely
-      # only on Trusted Publishers; an invalid token causes misleading 404 on PUT.
+      # If NPM_TOKEN is set (even wrong/expired), npm uses it and OIDC Trusted
+      # Publishing is NOT used → misleading E404 on PUT. For Trusted Publishers
+      # only: delete the NPM_TOKEN repo secret. Otherwise use a granular token
+      # with "Read and write" on package n8n-nodes-getdemo.
       - name: Release
         run: |
-          [ -n "$NPM_TOKEN" ] && npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          set -e
+          if [ -n "${NPM_TOKEN:-}" ]; then
+            echo "npm publish auth: NPM_TOKEN secret is set (granular/automation token)."
+            npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          else
+            echo "npm publish auth: NPM_TOKEN unset — using Trusted Publishing (OIDC)."
+            npm config delete //registry.npmjs.org/:_authToken 2>/dev/null || true
+          fi
           npm --version
           npm run release
         env:
