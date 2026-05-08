@@ -13,7 +13,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/Get-Demo/n8n-nodes-getdemo.git"
+        "url": "git+https://github.com/Get-Demo/n8n-nodes-getdemo.git"
     },
     "scripts": {
         "build": "n8n-node build",

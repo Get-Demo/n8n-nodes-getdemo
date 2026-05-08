@@ -49,6 +49,9 @@
 # npm 10 and may surface a misleading 404 on publish; use Node 24+ here.
 # See: https://docs.npmjs.com/trusted-publishers/
 #
+# ENEEDAUTH on publish: npm validates package.json repository.url against this
+# GitHub repo — use git+https://github.com/OWNER/REPO.git (see Troubleshooting).
+#
 # ─── RELEASE PROCESS ───────────────────────────────────────────────────────────
 #
 # Run the following command locally to start an interactive release:
@@ -85,7 +88,6 @@ jobs:
           # npm ≥11.5 required for GitHub OIDC Trusted Publishing (avoid bogus E404)
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
