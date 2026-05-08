@@ -41,9 +41,13 @@
 #
 # ─── TAG CONVENTION ────────────────────────────────────────────────────────────
 #
-# This workflow triggers on tags matching "*.*.*" (e.g. 0.2.0).
-# If you prefer tags with a "v" prefix (e.g. v0.2.0), change the filter to:
-#   tags: ['v*.*.*']
+# Matches semver tags with or without "v" (release-it often creates v0.1.0).
+#
+# ─── NODE / NPM ────────────────────────────────────────────────────────────────
+#
+# Trusted Publishing (OIDC) requires a recent npm CLI (≥11.5.x). Node 22 ships
+# npm 10 and may surface a misleading 404 on publish; use Node 24+ here.
+# See: https://docs.npmjs.com/trusted-publishers/
 #
 # ─── RELEASE PROCESS ───────────────────────────────────────────────────────────
 #
@@ -60,6 +64,8 @@ on:
   push:
     tags:
       - '*.*.*'
+      - 'v*.*.*'
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -76,16 +82,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          # npm ≥11.5 required for GitHub OIDC Trusted Publishing (avoid bogus E404)
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
+      # Token auth takes precedence over OIDC. Remove NPM_TOKEN secret if you rely
+      # only on Trusted Publishers; an invalid token causes misleading 404 on PUT.
       - name: Release
         run: |
           [ -n "$NPM_TOKEN" ] && npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          npm --version
           npm run release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
