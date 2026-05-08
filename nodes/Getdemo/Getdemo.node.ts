@@ -15,7 +15,7 @@ export class Getdemo implements INodeType {
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"]}}',
-		description: 'Interact with Getdemo API to list recordings and manage demos',
+		description: 'Interact with Getdemo API to list and manage demos',
 		defaults: {
 			name: 'Getdemo',
 		},
@@ -36,11 +36,11 @@ export class Getdemo implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'Recording',
-						value: 'recording',
+						name: 'Demo',
+						value: 'demo',
 					},
 				],
-				default: 'recording',
+				default: 'demo',
 			},
 			{
 				displayName: 'Operation',
@@ -49,15 +49,15 @@ export class Getdemo implements INodeType {
 				noDataExpression: true,
 				displayOptions: {
 					show: {
-						resource: ['recording'],
+						resource: ['demo'],
 					},
 				},
 				options: [
 					{
 						name: 'List',
 						value: 'list',
-						description: 'List all recordings (demos)',
-						action: 'List all recordings',
+						description: 'List all demos',
+						action: 'List all demos',
 					},
 				],
 				default: 'list',
@@ -75,7 +75,7 @@ export class Getdemo implements INodeType {
 				const resource = this.getNodeParameter('resource', i) as string;
 				const operation = this.getNodeParameter('operation', i) as string;
 
-				if (resource === 'recording' && operation === 'list') {
+				if (resource === 'demo' && operation === 'list') {
 					const options: IHttpRequestOptions = {
 						method: 'GET',
 						url: `${baseUrl}/recording`,
