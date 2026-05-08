@@ -1,6 +1,6 @@
 # n8n-nodes-getdemo
 
-This is an n8n community node for Getdemo. It allows you to list your demos (recordings) and receive webhook events for view activities.
+This is an n8n community node for Getdemo. It allows you to list your demos and receive webhook events for view activities.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
 
@@ -35,7 +35,7 @@ For more details, see the [n8n community nodes installation guide](https://docs.
 The main node for interacting with the Getdemo API.
 
 **Operations:**
-- **List Recordings**: Lists all demos (recordings) for the authenticated user
+- **List Demos**: Lists all demos for the authenticated user
 
 ### Getdemo Trigger
 
@@ -67,11 +67,11 @@ To use the Getdemo nodes, you need to generate an API Key in your Getdemo accoun
 
 ## Usage
 
-### Example 1: List Recordings
+### Example 1: List Demos
 
 1. Add the **Getdemo** node to your workflow
 2. Configure the **Getdemo API Key** credential with your API Key
-3. Select **Resource**: Recording
+3. Select **Resource**: Demo
 4. Select **Operation**: List
 5. Execute the workflow to get all your demos
 
@@ -95,14 +95,14 @@ To use the Getdemo nodes, you need to generate an API Key in your Getdemo accoun
 ### Example Workflow: Sync Demos to Google Sheets
 
 ```
-[Schedule: Daily 9am] → [Getdemo: List Recordings] → [Loop Over Items] → [Google Sheets: Append Row]
+[Schedule: Daily 9am] → [Getdemo: List Demos] → [Loop Over Items] → [Google Sheets: Append Row]
 ```
 
 ## Data Structure
 
-### List Recordings Response
+### List Demos Response
 
-Each recording object contains:
+Each demo object contains:
 - `id` (UUID): Demo ID
 - `name` (string): Demo name
 - `token` (UUID): Demo token
@@ -135,6 +135,6 @@ The webhook payload contains (varies by event type):
 ### 0.1.0
 
 - Initial release
-- Getdemo node with List Recordings operation
+- Getdemo node with List Demos operation
 - Getdemo Trigger node for view events (started, finished, step changed)
 - Getdemo API Key credential support
